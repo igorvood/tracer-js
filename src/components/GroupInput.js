@@ -34,6 +34,7 @@ class GroupInput extends React.Component{
     }
 
     buttonClick() {
+        console.log("запущено "+this.state.groupId)
         this.setState({groupIdRunned: "запущено "+this.state.groupId})
         // this.setState({groupIdRunned: "запущено "})
     }
