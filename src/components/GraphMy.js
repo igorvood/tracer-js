@@ -7,7 +7,7 @@ class GraphMy extends React.Component {
 
 
     render() {
-        return       <div onLoad={this.main()}>
+        return       <div onLoad={this.gr()}>
             GraphMy
         </div>
     }
@@ -15,14 +15,17 @@ class GraphMy extends React.Component {
     gr() {
         console.log("gr_GraphMy")
         let graph = Viva.Graph.graph();
-        graph.addNode(1);
-        graph.addNode(2);
-        graph.addLink(1, 2);
+        graph.addNode('anvaka', '91bad8ceeec43ae303790f8fe238164b');
+        graph.addNode('indexzero', 'd43e8ea63b61e7669ded5b9d3c2e980f');
+        graph.addLink('anvaka', 'indexzero');
 
+        var renderer = Viva.Graph.View.renderer(graph,
+        //     {
+        //     graphics : graphics
+        // }
+        );
 
-        let renderer
-            = Viva.Graph.View.renderer(graph);
-        renderer.run()
+        renderer.run();
     }
 
     main () {
