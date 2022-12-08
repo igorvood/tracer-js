@@ -6,11 +6,12 @@ function App() {
   return (
     <div className="Трассировка очередей kafka">
       <table>
-        <tr>
-          <GroupInput/>
+        <tr><td></td>
+          <td><GroupInput/></td>
+          <td></td>
         </tr>
         <tr>
-          213123asdasdasd
+          here draw uml
         </tr>
 
       </table>
