@@ -1,11 +1,7 @@
 import React from "react";
-import {Button} from "@mui/material";
 import axios from "axios";
 
 const baseUrl = "http://localhost:9091/arrows/byGroup/rto_graph"
-
-// axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-// axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
 
 
 class Uml extends React.Component{
@@ -55,6 +51,7 @@ class Uml extends React.Component{
     render() {
         return <div>
             {this.t}
+            {/*{dddd}*/}
         </div>
     }
 }
