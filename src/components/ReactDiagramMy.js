@@ -3,6 +3,7 @@ import {ReactDiagram} from "gojs-react";
 import * as go from "gojs";
 import requestGraph, {baseUrl} from "./RequestGraph";
 import axios from "axios";
+import DemoForceDirectedLayout from "./DemoForceDirectedLayout";
 
 
 class ReactDiagramMy extends React.Component{
@@ -49,7 +50,11 @@ class ReactDiagramMy extends React.Component{
                     model: new go.GraphLinksModel(
                         {
                             linkKeyProperty: 'key'  // IMPORTANT! must be defined for merges and data sync when using GraphLinksModel
-                        })
+                        }),
+                    // layout: new DemoForceDirectedLayout()  // have the comparer sort by numbers as well as letters
+                    layout: $(go.LayeredDigraphLayout)
+                    // layout: $(go.TreeLayout, { comparer: go.LayoutVertex.smartComparer }) // have the comparer sort by numbers as well as letters
+
                 });
 
         // define a simple Node template
@@ -65,6 +70,8 @@ class ReactDiagramMy extends React.Component{
                     new go.Binding('text').makeTwoWay()
                 )
             );
+        // go.GenogramLayout
+        //  diagram.layout = $(GenogramLayout, { direction: 90, layerSpacing: 30, columnSpacing: 10 })
 
         return diagram;
     }
@@ -73,52 +80,17 @@ class ReactDiagramMy extends React.Component{
         // alert('GoJS model changed!');
     }
 
-    getGr() {
-        requestGraph(baseUrl)
-
-
-
-        let jsObj = JSON.parse(requestGraph(baseUrl));
-
-        console.log('===============================')
-        console.log(jsObj)
-        let properties = "string".split(', ');
-        const obj = {};
-        let map = properties.map(function(property) {
-            let tup = property.split(':');
-            obj[tup[0]] = tup[1];
-            return tup
-        });
-
-        let nodes = jsObj.nodes.map (function (n){
-            return [{
-                key: n.index,
-                text: n.name,
-                color: 'lightblue'
-            }]
-        });
-
-        let arrows = jsObj.arrows.map (function (a){
-            return [{
-                key: a.index,
-                from: a.from,
-                to: a.to
-            }]
-        });
-
-        // this.setState({nodes: nodes})
-        // this.setState({arrows: arrows})
-
-        }
-
-
     render() {
 
+        let nodeColor;
         let no = this.state.nodes.map (function (n){
+            if (n.typeNode === 'TOPIC')
+                nodeColor = 'pink'
+            else nodeColor = 'lightblue'
             return {
                 key: n.index,
                 text: n.name,
-                color: 'lightblue'
+                color: nodeColor
             }
         });
 
@@ -129,7 +101,12 @@ class ReactDiagramMy extends React.Component{
                 to: a.to
             }
         });
-        console.log(arrows)
+
+        // { key: 0, text: 'Alpha_asdlkhhj_asdkjh_\nasdsadsad', color: 'lightblue'},
+        // { key: 1, text: 'Beta', color: 'orange'},
+        // { key: 2, text: 'Gamma', color: 'lightgreen'},
+        // { key: 3, text: 'Delta', color: 'pink' }
+
 
 
         return    <div>
