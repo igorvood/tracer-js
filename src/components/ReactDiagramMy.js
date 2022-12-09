@@ -1,9 +1,22 @@
 import React from "react";
 import {ReactDiagram} from "gojs-react";
 import * as go from "gojs";
+import requestGraph, {baseUrl} from "./RequestGraph";
 
 
 class ReactDiagramMy extends React.Component{
+
+    constructor(props) {
+        super(props);
+
+        this.state ={
+            nodes: [],
+                arrows: [],
+
+        }
+        // this.getGr()
+
+    }
 
      initDiagram() {
         const $ = go.GraphObject.make;
@@ -40,6 +53,39 @@ class ReactDiagramMy extends React.Component{
     handleModelChange(changes) {
         // alert('GoJS model changed!');
     }
+
+    getGr() {
+        let jsObj = JSON.parse(requestGraph(baseUrl));
+
+        let properties = "string".split(', ');
+        const obj = {};
+        let map = properties.map(function(property) {
+            let tup = property.split(':');
+            obj[tup[0]] = tup[1];
+            return tup
+        });
+
+        let nodes = jsObj.nodes.map (function (n){
+            return [{
+                key: n.index,
+                text: n.name,
+                color: 'lightblue'
+            }]
+        });
+
+        let arrows = jsObj.arrows.map (function (a){
+            return [{
+                key: a.index,
+                from: a.from,
+                to: a.to
+            }]
+        });
+
+        this.setState({nodes: nodes})
+        this.setState({arrows: arrows})
+
+        }
+
 
     render() {
         return    <div>

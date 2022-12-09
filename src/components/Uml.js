@@ -19,7 +19,7 @@ class Uml extends React.Component{
             })
 
             .then((resData)=> {
-                console.log(resData.data)
+                // console.log(resData.data)
             this.setState({t: resData.data})
             }
 
