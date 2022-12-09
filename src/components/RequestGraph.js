@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseUrl = "http://localhost:9091/arrows/byGroup/rto_graph"
+export const baseUrl = "http://localhost:8080/arrows/byGroup/rto_graph"
 
 
 const requestGraph = (url)=>{
@@ -17,7 +17,7 @@ const requestGraph = (url)=>{
         })
 
         .then((resData)=> {
-                // console.log(resData.data)
+                console.log(resData.data)
                 // this.setState({t: resData.data})
             result = resData
 

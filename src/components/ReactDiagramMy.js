@@ -2,6 +2,7 @@ import React from "react";
 import {ReactDiagram} from "gojs-react";
 import * as go from "gojs";
 import requestGraph, {baseUrl} from "./RequestGraph";
+import axios from "axios";
 
 
 class ReactDiagramMy extends React.Component{
@@ -9,9 +10,27 @@ class ReactDiagramMy extends React.Component{
     constructor(props) {
         super(props);
 
-        this.state ={
+        axios.get(baseUrl,
+            {
+                headers: {
+                    'accept': '*/*',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, DELETE, PUT'
+                }
+            })
+
+            .then((resData)=> {
+                    // console.log(resData.data)
+                    this.setState({nodes: resData.data.nodes})
+                    this.setState({arrows: resData.data.arrows})
+                }
+            )
+
+          this.state ={
             nodes: [],
-                arrows: [],
+            arrows: [],
+            nodesG: [],
+            arrowsG: [],
 
         }
         // this.getGr()
@@ -55,8 +74,14 @@ class ReactDiagramMy extends React.Component{
     }
 
     getGr() {
+        requestGraph(baseUrl)
+
+
+
         let jsObj = JSON.parse(requestGraph(baseUrl));
 
+        console.log('===============================')
+        console.log(jsObj)
         let properties = "string".split(', ');
         const obj = {};
         let map = properties.map(function(property) {
@@ -81,33 +106,39 @@ class ReactDiagramMy extends React.Component{
             }]
         });
 
-        this.setState({nodes: nodes})
-        this.setState({arrows: arrows})
+        // this.setState({nodes: nodes})
+        // this.setState({arrows: arrows})
 
         }
 
 
     render() {
+
+        let no = this.state.nodes.map (function (n){
+            return {
+                key: n.index,
+                text: n.name,
+                color: 'lightblue'
+            }
+        });
+
+        let arrows = this.state.arrows.map (function (a){
+            return {
+                key: a.index,
+                from: a.from,
+                to: a.to
+            }
+        });
+        console.log(arrows)
+
+
         return    <div>
             ...
             <ReactDiagram
                 initDiagram={this.initDiagram}
                 divClassName='diagram-component'
-                nodeDataArray={[
-                    { key: 0, text: 'Alpha_asdlkhhj_asdkjh_\nasdsadsad', color: 'lightblue'},
-                    { key: 1, text: 'Beta', color: 'orange'},
-                    { key: 2, text: 'Gamma', color: 'lightgreen'},
-                    { key: 3, text: 'Delta', color: 'pink' }
-                ]}
-                linkDataArray={[
-
-                    { key: -2, from: 0, to: 2 },
-                    { key: -3, from: 1, to: 1 },
-                    { key: -4, from: 2, to: 3 },
-                    { key: -6, from: 1, to: 3 },
-                    { key: -1, from: 0, to: 1 },
-                    { key: -5, from: 3, to: 0 }
-                ]}
+                nodeDataArray={no}
+                linkDataArray={arrows}
                 onModelChange={this.handleModelChange}
             />
             ...
