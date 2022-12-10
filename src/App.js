@@ -2,8 +2,6 @@ import logo from './logo.svg';
 import './App.css';
 import GroupInput from './components/GroupInput'
 import Uml from "./components/Uml";
-import GraphMy from "./components/GraphMy";
-import ReactFlowMy from "./components/ReactFlowMy"
 import ReactDiagramMy from "./components/ReactDiagramMy";
 
 function App() {
