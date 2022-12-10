@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import GroupInput from './components/GroupInput'
 import Uml from "./components/Uml";
