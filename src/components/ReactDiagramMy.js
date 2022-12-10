@@ -81,15 +81,26 @@ class ReactDiagramMy extends React.Component{
     }
 
     render() {
-
+        console.log(this.state.nodes)
         let nodeColor;
+        let nodeText;
         let no = this.state.nodes.map (function (n){
             if (n.typeNode === 'TOPIC')
-                nodeColor = 'pink'
-            else nodeColor = 'lightblue'
+                if(n.time === null) {
+                    nodeText = n.name
+                    nodeColor = 'pink'
+                }
+                else {
+                    nodeText = n.name+"\ntime:"+n.time
+                    nodeColor = 'lightgreen'
+                }
+            else {
+                nodeText = n.name
+                nodeColor = 'lightblue'
+            }
             return {
                 key: n.index,
-                text: n.name,
+                text: nodeText,
                 color: nodeColor
             }
         });
