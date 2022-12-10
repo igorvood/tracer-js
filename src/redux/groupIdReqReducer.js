@@ -1,7 +1,8 @@
 import {GROUP_ID_FROM_EDIT, GROUP_ID_REQ} from "./types";
+import {createStore} from "redux";
 
 const initialState = {
-    groupId: '',
+    groupId: 'dasdad',
     groupIdFromEdit: 'groupIdFromEdit'
 }
 
@@ -23,3 +24,5 @@ export const groupIdReqReducer = (state = initialState, action) => {
             return state;
     }
 }
+
+// export const groupIdReqReducerStore = createStore(groupIdReqReducer)

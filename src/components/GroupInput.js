@@ -19,15 +19,18 @@ function GroupInput(props) {
     </div>)
 
 }
-
+// получает проперти из редакса
+// тут state это state из redux
 function mapToProps(state){
 
     console.log('GroupInput mapToProps > ', state)
     return {
-        groupIdFromEdit: state.groupIdFromEdit
+        groupIdFromEdit: state.groupIdFromEdit,
+        groupId: state.groupId
     }
 
 }
+
 
 function mapDispatchToProps(dispatch){
     return {
