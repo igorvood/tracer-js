@@ -1,43 +1,53 @@
 import React from "react";
 import {Button} from "@mui/material";
+import {connect} from "react-redux";
+import {GROUP_ID_FROM_EDIT, GROUP_ID_REQ} from "../redux/types";
 
-class GroupInput extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            t: "Введите имя группы",
-            groupId: "",
-            groupIdRunned: "",
-        }
+function GroupInput(props) {
+    console.log('render GroupInput >',props)
+    return (<div>
+        <h3>{props.groupId}</h3>
+        <input placeholder={'Введите группу'}
+               // onClick={this.inputClick}
+               onChange={event =>  props.onGroupIdEdit(event.target.value)}
+               // onInput={props.onGroupIdEdit}
+               // onfocusout={onChange}
+        />
+        <Button variant="text"
+                onClick={props.saveGroupId}
+        >Начать трассировку</Button>
+    </div>)
 
-        this.inputClick = this.inputClick.bind(this)
-        this.buttonClick = this.buttonClick.bind(this)
-    }
-
-
-    render() {
-        return <div>
-            <h3>{this.state.groupIdRunned}</h3>
-            <h3>{this.t}</h3>
-            <input placeholder={this.state.t}
-                   onClick={this.inputClick}
-                   onChange={event => this.setState({groupId: event.target.value})}
-            />
-            <Button variant="text" onClick={this.buttonClick}
-            >Начать трассировку</Button>
-        </div>
-
-    }
-
-    inputClick() {
-        this.setState({t: "Новое значение"})
-    }
-
-    buttonClick() {
-        console.log("запущено "+this.state.groupId)
-        this.setState({groupIdRunned: "запущено "+this.state.groupId})
-        // this.setState({groupIdRunned: "запущено "})
-    }
 }
 
-export default GroupInput
+function mapToProps(state){
+
+    console.log('GroupInput mapToProps > ', state)
+    return {
+        groupIdFromEdit: state.groupIdFromEdit
+    }
+
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+        onGroupIdEdit: (data) => {
+            // console.log('mapDispatchToProps ', data)
+            const action = {
+                type: GROUP_ID_FROM_EDIT,
+                value: data
+            }
+            dispatch(action)
+        },
+        saveGroupId: () => {
+        // console.log('mapDispatchToProps ', data)
+        const action = {
+            type: GROUP_ID_REQ,
+        }
+        dispatch(action)
+    }
+    }
+
+}
+
+export default connect(mapToProps, mapDispatchToProps)(GroupInput )
