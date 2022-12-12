@@ -1,2 +1,2 @@
-export const GROUP_ID_REQ = 'GROUP_ID_REQ'
+export const GROUP_ID_FOR_REQUEST = 'GROUP_ID_FOR_REQUEST'
 export const GROUP_ID_FROM_EDIT = 'GROUP_ID_FROM_EDIT'
