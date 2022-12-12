@@ -1,12 +1,11 @@
 import React from "react";
 import {ReactDiagram} from "gojs-react";
 import * as go from "gojs";
-import requestGraph, {baseUrl} from "./RequestGraph";
+import {baseUrl} from "./RequestGraph";
 import axios from "axios";
-import DemoForceDirectedLayout from "./DemoForceDirectedLayout";
 
 
-class ReactDiagramMy extends React.Component{
+class ReactDiagramMy extends React.Component {
 
     constructor(props) {
         super(props);
@@ -20,14 +19,14 @@ class ReactDiagramMy extends React.Component{
                 }
             })
 
-            .then((resData)=> {
+            .then((resData) => {
                     // console.log(resData.data)
                     this.setState({nodes: resData.data.nodes})
                     this.setState({arrows: resData.data.arrows})
                 }
             )
 
-          this.state ={
+        this.state = {
             nodes: [],
             arrows: [],
             nodesG: [],
@@ -38,7 +37,7 @@ class ReactDiagramMy extends React.Component{
 
     }
 
-     initDiagram() {
+    initDiagram() {
         const $ = go.GraphObject.make;
         // set your license key here before creating the diagram: go.Diagram.licenseKey = "...";
         const diagram =
@@ -46,7 +45,7 @@ class ReactDiagramMy extends React.Component{
                 {
                     'undoManager.isEnabled': true,  // must be set to allow for model change listening
                     // 'undoManager.maxHistoryLength': 0,  // uncomment disable undo/redo functionality
-                    'clickCreatingTool.archetypeNodeData': { text: 'new node', color: 'lightblue' },
+                    'clickCreatingTool.archetypeNodeData': {text: 'new node', color: 'lightblue'},
                     model: new go.GraphLinksModel(
                         {
                             linkKeyProperty: 'key'  // IMPORTANT! must be defined for merges and data sync when using GraphLinksModel
@@ -62,11 +61,11 @@ class ReactDiagramMy extends React.Component{
             $(go.Node, 'Auto',  // the Shape will go around the TextBlock
                 new go.Binding('location', 'loc', go.Point.parse).makeTwoWay(go.Point.stringify),
                 $(go.Shape, 'RoundedRectangle',
-                    { name: 'SHAPE', fill: 'white', strokeWidth: 0 },
+                    {name: 'SHAPE', fill: 'white', strokeWidth: 0},
                     // Shape.fill is bound to Node.data.color
                     new go.Binding('fill', 'color')),
                 $(go.TextBlock,
-                    { margin: 8, editable: true },  // some room around the text
+                    {margin: 8, editable: true},  // some room around the text
                     new go.Binding('text').makeTwoWay()
                 )
             );
@@ -84,14 +83,13 @@ class ReactDiagramMy extends React.Component{
         console.log(this.state.nodes)
         let nodeColor;
         let nodeText;
-        let no = this.state.nodes.map (function (n){
+        let no = this.state.nodes.map(function (n) {
             if (n.typeNode === 'TOPIC')
-                if(n.time === null) {
+                if (n.time === null) {
                     nodeText = n.name
                     nodeColor = 'pink'
-                }
-                else {
-                    nodeText = n.name+"\ntime:"+n.time
+                } else {
+                    nodeText = n.name + "\ntime:" + n.time
                     nodeColor = 'lightgreen'
                 }
             else {
@@ -105,7 +103,7 @@ class ReactDiagramMy extends React.Component{
             }
         });
 
-        let arrows = this.state.arrows.map (function (a){
+        let arrows = this.state.arrows.map(function (a) {
             return {
                 key: a.index,
                 from: a.from,
@@ -119,8 +117,7 @@ class ReactDiagramMy extends React.Component{
         // { key: 3, text: 'Delta', color: 'pink' }
 
 
-
-        return    <div>
+        return <div>
             ...
             <ReactDiagram
                 initDiagram={this.initDiagram}
@@ -136,4 +133,5 @@ class ReactDiagramMy extends React.Component{
 
 
 }
+
 export default ReactDiagramMy
