@@ -1,31 +1,33 @@
 import {Button} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {inputTextAction} from "../redux/actions";
+import {inputTextAction, traceAction} from "../redux/actions";
 
 function GroupInput(props) {
 
     const dispatch = useDispatch()
     const groupId = useSelector(state => {
         const {groupIdReqReducer} = state
-        console.log('useSelector > ', state)
+
         return groupIdReqReducer.groupIdFromEdit
     })
 
-    const handleChange = (e) => {
+    const handleChangeGroup = (e) => {
         dispatch(inputTextAction(e.target.value))
+    }
+
+    const handleTrace = (e) => {
+        console.log('handleTrace > ', e)
+        dispatch(traceAction())
     }
 
 
     return (<div>
         <h3>{groupId}</h3>
         <input placeholder={'Введите группу'}
-            // onClick={this.inputClick}
-               onChange={event => handleChange(event)}
-            // onInput={props.onGroupIdEdit}
-            // onfocusout={onChange}
+               onChange={event => handleChangeGroup(event)}
         />
         <Button variant="text"
-                // onClick={props.saveGroupId}
+                onClick={event => handleTrace(event)}
         >Начать трассировку</Button>
     </div>)
 
