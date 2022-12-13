@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const baseUrl = "http://localhost:8080/arrows/byGroup/uasp-streaming-mdm-enrichment_profile-tx-step1"
 // export const baseUrl = "http://localhost:8080/arrows/byGroup/rto_graph"
+// export const baseUrl = "http://localhost:8080/arrows/byGroup/"
 
 
 const requestGraph = (url)=>{

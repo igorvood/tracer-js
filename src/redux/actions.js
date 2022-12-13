@@ -1,4 +1,4 @@
-import {GROUP_ID_FOR_REQUEST, GROUP_ID_FROM_EDIT} from "./types";
+import {DRAW_GRAPH, GROUP_ID_FOR_REQUEST, GROUP_ID_FROM_EDIT} from "./types";
 
 
 export function inputTextAction(text) {
@@ -13,3 +13,11 @@ export function traceAction() {
         type: GROUP_ID_FOR_REQUEST
     }
 }
+//
+// export function dispatchGraphAction(text) {
+//     return {
+//         type: DRAW_GRAPH,
+//         nodes,
+//         arrows
+//     }
+// }

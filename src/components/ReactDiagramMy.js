@@ -83,13 +83,13 @@ class ReactDiagramMy extends React.Component {
         console.log(this.state.nodes)
         let nodeColor;
         let nodeText;
-        let no = this.state.nodes.map(function (n) {
+        let nodesRemap = this.state.nodes.map(function (n) {
             if (n.typeNode === 'TOPIC')
                 if (n.time === null) {
                     nodeText = n.name
                     nodeColor = 'pink'
                 } else {
-                    nodeText = n.name + "\ntime:" + n.time
+                    nodeText = n.name + "\ntime:" + n.time+"\nID:"+n.id+"\nUUID:"+n.uid
                     nodeColor = 'lightgreen'
                 }
             else {
@@ -103,7 +103,7 @@ class ReactDiagramMy extends React.Component {
             }
         });
 
-        let arrows = this.state.arrows.map(function (a) {
+        let arrowsRemap = this.state.arrows.map(function (a) {
             return {
                 key: a.index,
                 from: a.from,
@@ -122,8 +122,8 @@ class ReactDiagramMy extends React.Component {
             <ReactDiagram
                 initDiagram={this.initDiagram}
                 divClassName='diagram-component'
-                nodeDataArray={no}
-                linkDataArray={arrows}
+                nodeDataArray={nodesRemap}
+                linkDataArray={arrowsRemap}
                 onModelChange={this.handleModelChange}
             />
             ...
