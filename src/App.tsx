@@ -15,28 +15,28 @@ const AppRoutes = () => {
     return routes;
 };
 
-const App = () => {
-        return (<>
-                <Navigation />
-            <Router>
-                <AppRoutes />
-            </Router>
-            </>
-        );
-    };
+// const App = () => {
+//         return (<>
+//                 <Navigation />
+//             <Router>
+//                 <AppRoutes />
+//             </Router>
+//             </>
+//         );
+//     };
 
 
-// function App() {
-//     return (
-//         <>
-//             <Navigation />
-//             <Routes>
-//                 <Route path="/" element={ <HomePage /> } />
-//                 <Route path="/favourites" element={ <TracerPage /> } />
-//             </Routes>
-//         </>
-// )
-// }
+function App() {
+    return (
+        <>
+             <Navigation />
+             <Routes>
+                 <Route path="/" element={ <TracerPage /> } />
+                 <Route path="/favourites" element={ <HomePage /> } />
+             </Routes>
+         </>
+ )
+ }
 
 
 
