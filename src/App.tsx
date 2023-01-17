@@ -7,13 +7,15 @@ import {TracerPage} from "./pages/TracerPage";
 
 function App() {
   return (
-    <>
-      <Navigation />
-      <Routes>
-        <Route path="/" element={ <HomePage /> } />
-        <Route path="/favourites" element={ <TracerPage /> } />
-      </Routes>
-    </>
+      // <h1>sfsdfsdfs</h1>
+     <>
+       <h1>sfsdfsdfs</h1>
+       {/*<Navigation />*/}
+       {/*<Routes>*/}
+       {/*  <Route path="/" element={ <HomePage /> } />*/}
+       {/*  <Route path="/favourites" element={ <TracerPage /> } />*/}
+       {/*</Routes>*/}
+     </>
   )
 }
 
