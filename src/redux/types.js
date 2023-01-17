@@ -1,3 +1,0 @@
-export const GROUP_ID_FOR_REQUEST = 'GROUP_ID_FOR_REQUEST'
-export const GROUP_ID_FROM_EDIT = 'GROUP_ID_FROM_EDIT'
-export const DRAW_GRAPH = 'DRAW_GRAPH'
