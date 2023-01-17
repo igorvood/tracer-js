@@ -8,7 +8,7 @@ export function Navigation() {
 
             <span>
             <Link to="/" className="mr-2">Tracer</Link>
-            <Link to="/homePage">HomePage</Link>
+            <Link to="/favourites">HomePage</Link>
             </span>
         </nav>
     )
