@@ -8,6 +8,7 @@ import {
 import {HomePage} from './pages/HomePage'
 
 import {TracerPage} from "./pages/TracerPage";
+import {Navigation} from "./components/Navigation";
 
 
 const AppRoutes = () => {
@@ -22,10 +23,12 @@ const AppRoutes = () => {
 
 
     const App = () => {
-        return (
+        return (<>
+                <Navigation />
             <Router>
                 <AppRoutes />
             </Router>
+            </>
         );
     };
 
