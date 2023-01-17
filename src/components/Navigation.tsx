@@ -7,10 +7,9 @@ export function Navigation() {
             <h3 className="font-bold">Github Search</h3>
 
             <span>
-        <Link to="/" className="mr-2">Tracer</Link>
-        <Link to="/homePage">HomePage</Link>
-      </span>
+            <Link to="/" className="mr-2">Tracer</Link>
+            <Link to="/homePage">HomePage</Link>
+            </span>
         </nav>
-
     )
 }
