@@ -1,4 +1,3 @@
-import './App.css';
 import GroupInput from './components/GroupInput'
 import Uml from "./components/Uml";
 import ReactDiagramMy from "./components/ReactDiagramMy";
