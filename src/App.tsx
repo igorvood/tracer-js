@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    useRoutes,
-} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes, useRoutes,} from "react-router-dom";
 import {HomePage} from './pages/HomePage'
 
 import {TracerPage} from "./pages/TracerPage";
@@ -20,9 +15,7 @@ const AppRoutes = () => {
     return routes;
 };
 
-
-
-    const App = () => {
+const App = () => {
         return (<>
                 <Navigation />
             <Router>
@@ -31,6 +24,20 @@ const AppRoutes = () => {
             </>
         );
     };
+
+
+// function App() {
+//     return (
+//         <>
+//             <Navigation />
+//             <Routes>
+//                 <Route path="/" element={ <HomePage /> } />
+//                 <Route path="/favourites" element={ <TracerPage /> } />
+//             </Routes>
+//         </>
+// )
+// }
+
 
 
 export default App
