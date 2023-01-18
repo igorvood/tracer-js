@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {
-    useGroupListLikeQuery,
-    useLazyGetGraphByGroupQuery,
-
-} from "../store/tracer/tracer.api";
+import {useGroupListLikeQuery, useLazyGetGraphByGroupQuery,} from "../store/tracer/tracer.api";
 import {useDebounce} from "../hooks/debounce";
+import {ServiceKafkaGraph} from "../components/ServiceKafkaGraph";
 
 export function TracerPage() {
 
     const [search, setSearch] = useState('')
-    let [dropDown, setDropDown] = useState(false);
+    const [dropDown, setDropDown] = useState(false);
     const debouncedSearchUser = useDebounce(search)
     const {isLoading: isLoadingUser, isError: isErrorUser, data: groups} = useGroupListLikeQuery(debouncedSearchUser, {
         skip: debouncedSearchUser.length < 2
@@ -29,6 +26,7 @@ export function TracerPage() {
     }
 
     return (
+        <div>
         <div className="flex justify-center pt-10 mx-auto h-screen w-screen">
             { isErrorUser && <p className="text-center text-red-600">Не удалось получить список групп</p> }
             <div className="relative w-[560px]">
@@ -50,13 +48,16 @@ export function TracerPage() {
                     }
                 </ul>}
                 <div className="container">
-
                     { isLoadingGraph && <p className="text-center">Graph is loading...</p> }
                     { isErrorGraph && <p className="text-center text-red-600">Не удалось получить граф</p> }
                     {/*{ graph?.map(repo => <RepoCard repo={repo} key={repo.id} />) }*/}
-                    { graph?.nodes.map(repo => <p>{repo.name}</p>) }
+                    <div className="justify-center py-2 px-4">
+                        {graph && <ServiceKafkaGraph graph={graph}></ServiceKafkaGraph>}
+                    </div>
                 </div>
             </div>
+        </div>
+
 
         </div>
 
