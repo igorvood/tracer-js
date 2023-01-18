@@ -18,5 +18,8 @@ export interface IGraph {
     arrows: IArrow[];
 }
 
-
+export interface IGroupServiceDto {
+    id: string;
+    description: string;
+}
 

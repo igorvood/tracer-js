@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {useGetGraphByGroupQuery} from "../store/tracer/tracer.api";
+import {useGroupListLikeQuery} from "../store/tracer/tracer.api";
 import {useDebounce} from "../hooks/debounce";
 
 export function TracerPage() {
 
     const [search, setSearch] = useState('')
     const debouncedSearch = useDebounce(search)
-    const {isLoading, isError, data} = useGetGraphByGroupQuery(debouncedSearch)
+    const {isLoading, isError, data: groups} = useGroupListLikeQuery(debouncedSearch, {
+        skip: debouncedSearch.length < 2
+    })
 
 
     useEffect(() =>{
@@ -27,7 +29,7 @@ export function TracerPage() {
                     onChange={e => setSearch(e.target.value)}
                 />
                 <ul className="list-none absolute top-[42px] left-0 right-0 max-h-[200px] overflow-y-scroll shadow-md bg-white">
-                    тут список групп графов
+                    { isLoading && <p className="text-center">Loading...</p> }
                 </ul>
 
             </div>

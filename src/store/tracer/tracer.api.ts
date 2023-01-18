@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {IGraph} from "../../models/models";
+import {IGraph, IGroupServiceDto} from "../../models/models";
 
 export const tracerApi = createApi({
     reducerPath: 'tracer/Api',
@@ -12,9 +12,19 @@ export const tracerApi = createApi({
                 url: `arrows/byGroup/${groupName}`
             })
         }),
+        groupListLike: build.query<IGroupServiceDto[], string>({
+            query: (groupNameLike: string) => ({
+                url: `group/like`,
+                params: {
+                    groupIdLike: groupNameLike,
+                    limit: 10
+                }
+            })
+        }),
 
     })
 
 })
 
 export const {useGetGraphByGroupQuery, useLazyGetGraphByGroupQuery} = tracerApi
+export const {useGroupListLikeQuery, useLazyGroupListLikeQuery} = tracerApi
