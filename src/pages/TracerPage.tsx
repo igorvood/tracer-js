@@ -1,5 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {useGetGraphByGroupQuery, useGroupListLikeQuery} from "../store/tracer/tracer.api";
+import {
+    useGroupListLikeQuery,
+    useLazyGetGraphByGroupQuery,
+
+} from "../store/tracer/tracer.api";
 import {useDebounce} from "../hooks/debounce";
 
 export function TracerPage() {
@@ -11,9 +15,7 @@ export function TracerPage() {
         skip: debouncedSearchUser.length < 2
     })
 
-
-    const {isLoading: isLoadingGraph, isError: isErrorGraph, data: graph} = useGetGraphByGroupQuery(debouncedSearchUser)
-
+    const [fetchRepos, {isLoading: isLoadingGraph, isError: isErrorGraph, data: graph}] = useLazyGetGraphByGroupQuery()
 
     useEffect(() =>{
         // показывать дроп даун если
@@ -22,13 +24,13 @@ export function TracerPage() {
         [debouncedSearchUser, groups]
     )
 
-    const clickDropDownHandler = (groupId: String) =>  {
-
+    const clickDropDownHandler = (groupId: string) =>  {
+        fetchRepos(groupId)
     }
 
     return (
         <div className="flex justify-center pt-10 mx-auto h-screen w-screen">
-            { isErrorUser && <p className="text-center text-red-600">Не удалось получить граф</p> }
+            { isErrorUser && <p className="text-center text-red-600">Не удалось получить список групп</p> }
             <div className="relative w-[560px]">
                 <input
                     type="text"
@@ -47,8 +49,15 @@ export function TracerPage() {
                     )
                     }
                 </ul>}
+                <div className="container">
 
+                    { isLoadingGraph && <p className="text-center">Graph is loading...</p> }
+                    { isErrorGraph && <p className="text-center text-red-600">Не удалось получить граф</p> }
+                    {/*{ graph?.map(repo => <RepoCard repo={repo} key={repo.id} />) }*/}
+                    { graph?.nodes.map(repo => <p>{repo.name}</p>) }
+                </div>
             </div>
+
         </div>
 
     )
