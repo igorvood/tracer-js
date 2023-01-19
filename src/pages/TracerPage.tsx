@@ -23,6 +23,8 @@ export function TracerPage() {
 
     const clickDropDownHandler = (groupId: string) => {
         fetchRepos(groupId)
+        setSearch(groupId)
+        setDropDown(false)
     }
 
     return (
@@ -51,9 +53,11 @@ export function TracerPage() {
                         {isLoadingGraph && <p className="text-center">Graph is loading...</p>}
                         {isErrorGraph && <p className="text-center text-red-600">Не удалось получить граф</p>}
                         {/*{ graph?.map(repo => <RepoCard repo={repo} key={repo.id} />) }*/}
+                        {!dropDown &&
                         <div className="justify-center py-2 px-4">
                             {graph && <ServiceKafkaGraph graph={graph}></ServiceKafkaGraph>}
                         </div>
+                        }
                     </div>
                 </div>
             </div>
