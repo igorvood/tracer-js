@@ -15,7 +15,7 @@ interface IGraphNode {
 }
 
 
-export function ServiceKafkaGraph({ graph }: ServiceKafkaGraphProps) {
+export function ServiceKafkaGraph({graph}: ServiceKafkaGraphProps) {
 
     const initGraph = () => {
         const $ = go.GraphObject.make;
@@ -55,7 +55,7 @@ export function ServiceKafkaGraph({ graph }: ServiceKafkaGraphProps) {
         return diagram;
     }
 
-    const nodesRemap= (nodes: INode[]) =>{
+    const nodesRemap = (nodes: INode[]) => {
         return nodes.map(function (n) {
             let nodeColor;
             let nodeText;
@@ -83,7 +83,7 @@ export function ServiceKafkaGraph({ graph }: ServiceKafkaGraphProps) {
         })
     }
 
-    const arrowsRemap = (arrows: IArrow[]): { from: number; to: number; key: number }[] =>{
+    const arrowsRemap = (arrows: IArrow[]): { from: number; to: number; key: number }[] => {
         return arrows.map(function (a) {
             return {
                 key: a.index,
@@ -94,19 +94,18 @@ export function ServiceKafkaGraph({ graph }: ServiceKafkaGraphProps) {
     }
 
 
-
-
     return (
-    <div className="border py-3 px-5 rounded mb-2 hover:shadow-md hover:bg-gray-100 transition-all diagram-component">
-        ...
-        <ReactDiagram
-            initDiagram={initGraph}
-            divClassName='diagram-component'
-            nodeDataArray={nodesRemap(graph.nodes)}
-            linkDataArray={arrowsRemap(graph.arrows)}
-            // onModelChange={this.handleModelChange}
-        />
-        ...
-    </div>
+        <div
+            className="border py-3 px-5 rounded mb-2 hover:shadow-md hover:bg-gray-100 transition-all diagram-component">
+            ...
+            <ReactDiagram
+                initDiagram={initGraph}
+                divClassName='diagram-component'
+                nodeDataArray={nodesRemap(graph.nodes)}
+                linkDataArray={arrowsRemap(graph.arrows)}
+                // onModelChange={this.handleModelChange}
+            />
+            ...
+        </div>
     )
 }
