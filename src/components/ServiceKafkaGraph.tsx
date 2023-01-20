@@ -95,17 +95,17 @@ export function ServiceKafkaGraph({graph}: ServiceKafkaGraphProps) {
 
 
     return (
-        <div
-            className="border py-3 px-5 rounded mb-2 hover:shadow-md hover:bg-gray-100 transition-all diagram-component">
-            ...
+
+        <div className="border py-3 px-5 w-full rounded mb-2 bg-gray-500 flex-grow: 3">
+
             <ReactDiagram
                 initDiagram={initGraph}
-                divClassName='diagram-component'
+                divClassName='border py-3 px-5 rounded mb-2 hover:shadow-md hover:bg-gray-100 transition-all diagram-component flex-grow: 3'
                 nodeDataArray={nodesRemap(graph.nodes)}
                 linkDataArray={arrowsRemap(graph.arrows)}
                 // onModelChange={this.handleModelChange}
             />
-            ...
-        </div>
+
+         </div>
     )
 }

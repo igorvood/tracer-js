@@ -29,7 +29,7 @@ export function TracerPage() {
 
     return (
         <div>
-            <div className="flex justify-center pt-10 mx-auto h-screen w-screen">
+            <div className="flex justify-center pt-10 mx-auto w-screen">
                 {isErrorUser && <p className="text-center text-red-600">Не удалось получить список групп</p>}
                 <div className="relative w-[560px]">
                     <input
@@ -49,19 +49,20 @@ export function TracerPage() {
                         )
                         }
                     </ul>}
-                    <div className="container">
-                        {isLoadingGraph && <p className="text-center">Graph is loading...</p>}
-                        {isErrorGraph && <p className="text-center text-red-600">Не удалось получить граф</p>}
-                        {/*{ graph?.map(repo => <RepoCard repo={repo} key={repo.id} />) }*/}
-                        {!dropDown &&
-                        <div className="justify-center py-2 px-4">
-                            {graph && <ServiceKafkaGraph graph={graph}></ServiceKafkaGraph>}
-                        </div>
-                        }
-                    </div>
-                </div>
-            </div>
 
+                </div>
+
+            </div>
+            <div >
+                {isLoadingGraph && <p className="text-center">Graph is loading...</p>}
+                {isErrorGraph && <p className="text-center text-red-600">Не удалось получить граф</p>}
+                {/*{ graph?.map(repo => <RepoCard repo={repo} key={repo.id} />) }*/}
+                {!dropDown &&
+                    // <div className="justify-center py-2 px-4">
+                        graph && <ServiceKafkaGraph graph={graph}></ServiceKafkaGraph>
+                    // </div>
+                }
+            </div>
 
         </div>
 

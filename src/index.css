@@ -4,7 +4,12 @@
 
 .diagram-component {
     width: 3000px;
-    height: 1900px;
+    height: 1000px;
+
+    /*min-width: 1000px;*/
+    /*margin-top: 2px;*/
+    /*margin-bottom: 2px;*/
+
     border: solid 1px black;
     background-color: white;
 }
