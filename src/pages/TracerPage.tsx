@@ -64,6 +64,7 @@ export function TracerPage() {
                 }
             </div>
 
+            {/*<div className="border py-3 px-5 w-full h-full rounded mb-2 bg-gray-500 flex-grow: 3">asd</div>*/}
         </div>
 
     )

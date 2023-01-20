@@ -96,16 +96,28 @@ export function ServiceKafkaGraph({graph}: ServiceKafkaGraphProps) {
 
     return (
 
-        <div className="border py-3 px-5 w-full rounded mb-2 bg-gray-500 flex-grow: 3">
+        // <div className="border py-3 px-5 w-full rounded mb-2 bg-gray-500 flex-grow: 3">
 
             <ReactDiagram
                 initDiagram={initGraph}
-                divClassName='border py-3 px-5 rounded mb-2 hover:shadow-md hover:bg-gray-100 transition-all diagram-component flex-grow: 3'
+                divClassName='border py-3 px-5 rounded mb-2 hover:shadow-md transition-all w-full h-screen'
                 nodeDataArray={nodesRemap(graph.nodes)}
                 linkDataArray={arrowsRemap(graph.arrows)}
                 // onModelChange={this.handleModelChange}
             />
 
-         </div>
+         // </div>
     )
 }
+
+// .diagram-component {
+//     width: 3000px;
+//     height: 1000px;
+//
+//     /*min-width: 1000px;*/
+//     /*margin-top: 2px;*/
+//     /*margin-bottom: 2px;*/
+//
+//     border: solid 1px black;
+//     background-color: white;
+// }
