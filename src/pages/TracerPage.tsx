@@ -39,6 +39,11 @@ export function TracerPage() {
                         value={search}
                         onChange={e => setSearch(e.target.value)}
                     />
+                    {search.length>0 && <button className="border py-2 px-4 w-full h-[42px] mb-2 cursor-pointer transition-colors hover:bg-gray-500 hover:text-white">Сброс кеша</button>
+                    }
+                    {search.length>0 && <button className="border py-2 px-4 w-full h-[42px] mb-2 cursor-pointer transition-colors hover:bg-gray-500 hover:text-white">Обновить граф</button>
+                    }
+
                     {dropDown && <ul
                         className="list-none absolute top-[42px] left-0 right-0 max-h-[200px] overflow-y-scroll shadow-md bg-white">
                         {isLoadingUser && <p className="text-center">Loading...</p>}
