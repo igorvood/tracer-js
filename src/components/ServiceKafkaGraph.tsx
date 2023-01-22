@@ -1,43 +1,23 @@
 import React from "react";
+import {IArrow, IGraph, INode} from "../models/models";
 import {ReactDiagram} from "gojs-react";
 import * as go from "gojs";
-import {baseUrl} from "./RequestGraph";
-import axios from "axios";
 
 
-class ReactDiagramMy extends React.Component {
+interface IServiceKafkaGraphProps {
+    graph: IGraph
+}
 
-    constructor(props) {
-        super(props);
+interface IGraphNode {
+    key: string,
+    text: string,
+    color: string
+}
 
-        axios.get(baseUrl,
-            {
-                headers: {
-                    'accept': '*/*',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'GET, POST, DELETE, PUT'
-                }
-            })
 
-            .then((resData) => {
-                    // console.log(resData.data)
-                    this.setState({nodes: resData.data.nodes})
-                    this.setState({arrows: resData.data.arrows})
-                }
-            )
+export function ServiceKafkaGraph({graph}: IServiceKafkaGraphProps) {
 
-        this.state = {
-            nodes: [],
-            arrows: [],
-            nodesG: [],
-            arrowsG: [],
-
-        }
-        // this.getGr()
-
-    }
-
-    initDiagram() {
+    const initGraph = () => {
         const $ = go.GraphObject.make;
         // set your license key here before creating the diagram: go.Diagram.licenseKey = "...";
         const diagram =
@@ -75,63 +55,69 @@ class ReactDiagramMy extends React.Component {
         return diagram;
     }
 
-    handleModelChange(changes) {
-        // alert('GoJS model changed!');
-    }
+    const nodesRemap = (nodes: INode[]) => {
+        return nodes.map(function (n) {
+            let nodeColor;
+            let nodeText;
 
-    render() {
-        console.log(this.state.nodes)
-        let nodeColor;
-        let nodeText;
-        let nodesRemap = this.state.nodes.map(function (n) {
             if (n.typeNode === 'TOPIC')
                 if (n.time === null) {
                     nodeText = n.name
                     nodeColor = 'pink'
                 } else {
-                    nodeText = n.name + "\ntime:" + n.time+"\nID:"+n.id+"\nUUID:"+n.uid
+                    nodeText = n.name + "\ntime:" + n.time + "\nID:" + n.id + "\nUUID:" + n.uid
                     nodeColor = 'lightgreen'
                 }
             else {
                 nodeText = n.name
                 nodeColor = 'lightblue'
             }
-            return {
-                key: n.index,
+            const modal: IGraphNode = {
+                key: n.index.toString(),
                 text: nodeText,
                 color: nodeColor
-            }
-        });
+            };
 
-        let arrowsRemap = this.state.arrows.map(function (a) {
+            return modal
+
+        })
+    }
+
+    const arrowsRemap = (arrows: IArrow[]): { from: number; to: number; key: number }[] => {
+        return arrows.map(function (a) {
             return {
                 key: a.index,
                 from: a.from,
                 to: a.to
             }
         });
-
-        // { key: 0, text: 'Alpha_asdlkhhj_asdkjh_\nasdsadsad', color: 'lightblue'},
-        // { key: 1, text: 'Beta', color: 'orange'},
-        // { key: 2, text: 'Gamma', color: 'lightgreen'},
-        // { key: 3, text: 'Delta', color: 'pink' }
-
-
-        return <div>
-            ...
-            <ReactDiagram
-                initDiagram={this.initDiagram}
-                divClassName='diagram-component'
-                nodeDataArray={nodesRemap}
-                linkDataArray={arrowsRemap}
-                onModelChange={this.handleModelChange}
-            />
-            ...
-        </div>
-
     }
 
 
+    return (
+
+        // <div className="border py-3 px-5 w-full rounded mb-2 bg-gray-500 flex-grow: 3">
+
+            <ReactDiagram
+                initDiagram={initGraph}
+                divClassName='border py-3 px-5 rounded mb-2 hover:shadow-md transition-all w-full h-screen'
+                nodeDataArray={nodesRemap(graph.nodes)}
+                linkDataArray={arrowsRemap(graph.arrows)}
+                // onModelChange={this.handleModelChange}
+            />
+
+         // </div>
+    )
 }
 
-export default ReactDiagramMy
+// .diagram-component {
+//     width: 3000px;
+//     height: 1000px;
+//
+//     /*min-width: 1000px;*/
+//     /*margin-top: 2px;*/
+//     /*margin-bottom: 2px;*/
+//
+//     border: solid 1px black;
+//     background-color: white;
+// }
