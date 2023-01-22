@@ -4,7 +4,7 @@ import {ReactDiagram} from "gojs-react";
 import * as go from "gojs";
 
 
-interface ServiceKafkaGraphProps {
+interface IServiceKafkaGraphProps {
     graph: IGraph
 }
 
@@ -15,7 +15,7 @@ interface IGraphNode {
 }
 
 
-export function ServiceKafkaGraph({graph}: ServiceKafkaGraphProps) {
+export function ServiceKafkaGraph({graph}: IServiceKafkaGraphProps) {
 
     const initGraph = () => {
         const $ = go.GraphObject.make;
