@@ -12,6 +12,11 @@ export const tracerApi = createApi({
                 url: `arrows/byGroup/${groupName}`
             })
         }),
+        invalidateGroup: build.query<void, string>({
+            query: (groupName: string) => ({
+                url: `invalidate/${groupName}`
+            })
+        }),
         groupListLike: build.query<IGroupServiceDto[], string>({
             query: (groupNameLike: string) => ({
                 url: `group/like`,
@@ -26,5 +31,6 @@ export const tracerApi = createApi({
 
 })
 
-export const {useGetGraphByGroupQuery, useLazyGetGraphByGroupQuery} = tracerApi
-export const {useGroupListLikeQuery, useLazyGroupListLikeQuery} = tracerApi
+export const {useLazyGetGraphByGroupQuery} = tracerApi
+export const {useGroupListLikeQuery} = tracerApi
+export const {useLazyInvalidateGroupQuery} = tracerApi

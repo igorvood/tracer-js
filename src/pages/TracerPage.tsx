@@ -1,5 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {useGroupListLikeQuery, useLazyGetGraphByGroupQuery,} from "../store/tracer/tracer.api";
+import {
+    useGroupListLikeQuery,
+    useLazyGetGraphByGroupQuery,
+    useLazyInvalidateGroupQuery,
+} from "../store/tracer/tracer.api";
 import {useDebounce} from "../hooks/debounce";
 import {ServiceKafkaGraph} from "../components/ServiceKafkaGraph";
 import {Button} from "../components/Button";
@@ -14,6 +18,8 @@ export function TracerPage() {
     })
 
     const [fetchRepos, {isLoading: isLoadingGraph, isError: isErrorGraph, data: graph}] = useLazyGetGraphByGroupQuery()
+
+    const [fetchInvalidateGroup, {isLoading: isLoadingInvalidate, isError: isErrorInvalidate}] = useLazyInvalidateGroupQuery()
 
     useEffect(() => {
             // показывать дроп даун если
@@ -40,7 +46,7 @@ export function TracerPage() {
                         value={search}
                         onChange={e => setSearch(e.target.value)}
                     />
-                    {search.length>0 && <Button text="Сброс кеша" clickFun={() => console.log("reset") }/>
+                    {search.length>0 && <Button text="Сброс кеша" clickFun={() => fetchInvalidateGroup(search) }/>
                     }
                     {search.length>0 && <Button text="Обновить граф" clickFun={() => clickDropDownHandler(search) } />
                     }
