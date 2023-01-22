@@ -7,10 +7,16 @@ import {
 import {useDebounce} from "../hooks/debounce";
 import {ServiceKafkaGraph} from "../components/ServiceKafkaGraph";
 import {Button} from "../components/Button";
+import {useActions} from "../hooks/actions";
+import {useAppSelector} from "../hooks/redux";
 
 export function TracerPage() {
 
-    const [search, setSearch] = useState('')
+    const {idGroup} = useAppSelector(state => state.tracer)
+
+    const {rememberIdGroup} = useActions();
+
+    const [search, setSearch] = useState(idGroup ?? '')
     const [dropDown, setDropDown] = useState(false);
     const debouncedSearchUser = useDebounce(search)
     const {isLoading: isLoadingUser, isError: isErrorUser, data: groups} = useGroupListLikeQuery(debouncedSearchUser, {
@@ -29,6 +35,7 @@ export function TracerPage() {
     )
 
     const clickDropDownHandler = (groupId: string) => {
+        rememberIdGroup(groupId)
         fetchRepos(groupId)
         setSearch(groupId)
         setDropDown(false)

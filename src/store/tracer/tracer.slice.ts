@@ -7,7 +7,7 @@ interface TracerState {
 }
 
 const initialState: TracerState = {
-  idGroup: JSON.parse(localStorage.getItem(LS_ID_GROUP) ?? '')
+  idGroup: JSON.parse(localStorage.getItem(LS_ID_GROUP) ?? '{}')
 }
 
 export const tracerSlice = createSlice({
