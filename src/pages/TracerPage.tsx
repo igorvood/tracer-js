@@ -58,7 +58,7 @@ export function TracerPage() {
                     {search.length>0 && <Button text="Обновить граф" clickFun={() => clickDropDownHandler(search) } />
                     }
 
-                    {dropDown && <ul
+                    {(dropDown && idGroup!= search) && <ul
                         className="list-none absolute top-[42px] left-0 right-0 max-h-[200px] overflow-y-scroll shadow-md bg-white">
                         {isLoadingUser && <p className="text-center">Loading...</p>}
                         {groups?.map(gr => <li key={gr.id}
