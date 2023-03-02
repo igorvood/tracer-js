@@ -95,7 +95,6 @@ export function ServiceKafkaGraph({graph}: IServiceKafkaGraphProps) {
                     new go.Binding('fill', 'color')),
                 $(go.TextBlock,
                     {margin: 8, editable: true},  // some room around the text
-                    // new go.Binding('text','', tooltipTextConverter).makeTwoWay()
                     new go.Binding('text').makeTwoWay()
                 )
             );
