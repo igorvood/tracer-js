@@ -109,9 +109,10 @@ export function ServiceKafkaGraph({graph}: IServiceKafkaGraphProps) {
         return nodes.map(function (n) {
             let nodeColor;
             let nodeText;
-            let toolTip = "No data";
+            let toolTip = '';
 
-            if (n.typeNode === 'TOPIC')
+            if (n.typeNode === 'TOPIC') {
+                toolTip = "empty data"
                 if (n.time === null) {
                     nodeText = n.name
                     nodeColor = 'pink'
@@ -123,17 +124,18 @@ export function ServiceKafkaGraph({graph}: IServiceKafkaGraphProps) {
                         } catch (e) {
                             toolTip = n.messageText
                         }
-                        console.log('toolTip %', JSON.stringify(toolTip, null, 2))
-                    } else toolTip = n.messageText || "empty data"
+                    }
 
 
                     nodeText = n.name + "\ntime:" + n.time + "\nID:" + n.id + "\nUUID:" + n.uid
                     nodeColor = 'lightgreen'
                     // toolTip = n.messageText || "empty data"
                 }
+            }
             else {
                 nodeText = n.name
                 nodeColor = 'lightblue'
+                toolTip = `Service ${n.name}`
             }
             const modal: IGraphNode = {
                 key: n.index.toString(),
