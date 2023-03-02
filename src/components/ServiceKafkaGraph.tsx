@@ -11,7 +11,8 @@ interface IServiceKafkaGraphProps {
 interface IGraphNode {
     key: string,
     text: string,
-    color: string
+    color: string,
+    toolTip: string,
 }
 
 
@@ -34,11 +35,59 @@ export function ServiceKafkaGraph({graph}: IServiceKafkaGraphProps) {
                     layout: $(go.LayeredDigraphLayout)
                     // layout: $(go.TreeLayout, { comparer: go.LayoutVertex.smartComparer }) // have the comparer sort by numbers as well as letters
 
+                },
+                {
+                    isReadOnly: false,
+                    allowHorizontalScroll: true,
+                    allowVerticalScroll: true,
+                    allowZoom: false,
+                    allowSelect: true,
+                    // autoScale: Diagram.Uniform,
+                    // contentAlignment: go.Spot.LeftCenter
+
                 });
 
+
+        // const myDiagram = $(go.Diagram, diagramId, {
+        //     initialContentAlignment: go.Spot.LeftCenter,
+        //     layout: $(go.TreeLayout, {
+        //         angle: 0,
+        //         arrangement: go.TreeLayout.ArrangementVertical,
+        //         treeStyle: go.TreeLayout.StyleLayered
+        //     }),
+        //     isReadOnly: false,
+        //     allowHorizontalScroll: true,
+        //     allowVerticalScroll: true,
+        //     allowZoom: false,
+        //     allowSelect: true,
+        //     autoScale: Diagram.Uniform,
+        //     contentAlignment: go.Spot.LeftCenter
+        // });
+
+        function tooltipTextConverter({toolTip}: IGraphNode) {
+            var str = "some tool";
+            // str += "Born: " + person.birthYear;
+            // if (person.deathYear !== undefined) str += "\nDied: " + person.deathYear;
+            // if (person.reign !== undefined) str += "\nReign: " + person.reign;
+            return toolTip;
+        }
+
+        // define tooltips for nodes
+        var tooltiptemplate =
+            $("ToolTip",
+                {"Border.fill": "whitesmoke", "Border.stroke": "black"},
+                $(go.TextBlock,
+                    {
+                        font: "bold 8pt Helvetica, bold Arial, sans-serif",
+                        wrap: go.TextBlock.WrapFit,
+                        margin: 5
+                    },
+                    new go.Binding("text", "", tooltipTextConverter))
+            );
         // define a simple Node template
         diagram.nodeTemplate =
             $(go.Node, 'Auto',  // the Shape will go around the TextBlock
+                {deletable: false, toolTip: tooltiptemplate},
                 new go.Binding('location', 'loc', go.Point.parse).makeTwoWay(go.Point.stringify),
                 $(go.Shape, 'RoundedRectangle',
                     {name: 'SHAPE', fill: 'white', strokeWidth: 0},
@@ -46,6 +95,7 @@ export function ServiceKafkaGraph({graph}: IServiceKafkaGraphProps) {
                     new go.Binding('fill', 'color')),
                 $(go.TextBlock,
                     {margin: 8, editable: true},  // some room around the text
+                    // new go.Binding('text','', tooltipTextConverter).makeTwoWay()
                     new go.Binding('text').makeTwoWay()
                 )
             );
@@ -59,14 +109,27 @@ export function ServiceKafkaGraph({graph}: IServiceKafkaGraphProps) {
         return nodes.map(function (n) {
             let nodeColor;
             let nodeText;
+            let toolTip = "No data";
 
             if (n.typeNode === 'TOPIC')
                 if (n.time === null) {
                     nodeText = n.name
                     nodeColor = 'pink'
                 } else {
+
+                    if (n.messageText) {
+                        try {
+                            toolTip = JSON.stringify(JSON.parse(n.messageText), null, 2)
+                        } catch (e) {
+                            toolTip = n.messageText
+                        }
+                        console.log('toolTip %', JSON.stringify(toolTip, null, 2))
+                    } else toolTip = n.messageText || "empty data"
+
+
                     nodeText = n.name + "\ntime:" + n.time + "\nID:" + n.id + "\nUUID:" + n.uid
                     nodeColor = 'lightgreen'
+                    // toolTip = n.messageText || "empty data"
                 }
             else {
                 nodeText = n.name
@@ -75,7 +138,8 @@ export function ServiceKafkaGraph({graph}: IServiceKafkaGraphProps) {
             const modal: IGraphNode = {
                 key: n.index.toString(),
                 text: nodeText,
-                color: nodeColor
+                color: nodeColor,
+                toolTip: toolTip
             };
 
             return modal
@@ -98,15 +162,15 @@ export function ServiceKafkaGraph({graph}: IServiceKafkaGraphProps) {
 
         // <div className="border py-3 px-5 w-full rounded mb-2 bg-gray-500 flex-grow: 3">
 
-            <ReactDiagram
-                initDiagram={initGraph}
-                divClassName='border py-3 px-5 rounded mb-2 hover:shadow-md transition-all w-full h-screen'
-                nodeDataArray={nodesRemap(graph.nodes)}
-                linkDataArray={arrowsRemap(graph.arrows)}
-                // onModelChange={this.handleModelChange}
-            />
+        <ReactDiagram
+            initDiagram={initGraph}
+            divClassName='border py-3 px-5 rounded mb-2 hover:shadow-md transition-all w-full h-screen'
+            nodeDataArray={nodesRemap(graph.nodes)}
+            linkDataArray={arrowsRemap(graph.arrows)}
+            // onModelChange={this.handleModelChange}
+        />
 
-         // </div>
+        // </div>
     )
 }
 

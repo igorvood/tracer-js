@@ -5,6 +5,7 @@ export interface INode {
     id?: any;
     uid?: any;
     time?: any;
+    messageText?: string;
 }
 
 export interface IArrow {
